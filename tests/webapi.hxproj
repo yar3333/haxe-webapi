@@ -24,7 +24,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="Main" />
     <option enabledebug="True" />
-    <option additional="--macro &quot;webapi.Macro.setOutput('gen')&quot;&#xA;--macro &quot;include('v1')&quot;" />
+    <option additional="--macro &quot;webapi.Macro.setOutput('gen')&quot;&#xA;--macro &quot;webapi.Macro.setAggregatorTopPackage('v1')&quot;&#xA;--macro &quot;include('v1')&quot;" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -3,6 +3,7 @@ package webapi;
 import haxe.Unserializer;
 import js.Promise;
 import js.html.XMLHttpRequest;
+import stdlib.Exception;
 import stdlib.Serializer;
 
 class Requester
@@ -36,7 +37,7 @@ class Requester
 				if (xhr.readyState == XMLHttpRequest.DONE)
 				{
 					if (xhr.status == 200) resolve(xhr.responseText);
-					else                   reject({ status:xhr.status, text:xhr.responseText });
+					else                   reject(new Exception(xhr.status + "\n" + xhr.responseText));
 				}
 			}
 			
