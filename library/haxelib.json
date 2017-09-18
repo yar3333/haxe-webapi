@@ -1,0 +1,13 @@
+{
+  "name": "webapi",
+  "license": "LGPL",
+  "tags": ["macro","js","web","api"],
+  "description": "A macro tool to generate haxe and none-haxe codes from existing haxe source codes.",
+  "contributors": ["yar3333"],
+  "releasenote": "Init.",
+  "version": "1.0.0",
+  "url": "https://bitbucket.org/yar3333/haxe-webapi",
+  "dependencies": {
+	"stdlib": ""
+  }
+}

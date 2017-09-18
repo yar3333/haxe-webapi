@@ -1,0 +1,12 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^[^.]*[^/]$ /$0/ [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^[^.]*$ index.n [L,QSA]
+
+<FilesMatch "^temp/">
+    Require all denied
+</FilesMatch>
+Require all granted
