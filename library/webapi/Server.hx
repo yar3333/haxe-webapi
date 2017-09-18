@@ -14,9 +14,11 @@ class Server
 		Sys.setCwd(Web.getCwd());
 		#end
 		
-		var url = Web.getURI();
+		var a = Web.getParams().get("a");
+		if (a == null) { notFound("GET parameter 'a' must be specified."); return; }
+		if (a == "") { notFound("GET parameter 'a' must not be empty."); return; }
 		
-		var parts = url.trim("/").split("/");
+		var parts = a.trim("/").split("/");
 		if (parts.length < 2) { notFound("Path too short."); return; }
 		
 		var controllerName = parts.slice(0, parts.length - 2).join(".") + (parts.length > 2 ? "." : "") + parts[parts.length - 2].capitalize();

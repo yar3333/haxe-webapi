@@ -11,6 +11,6 @@ class Trash
 	}
 	
 	public function f1():js.Promise<{ }> {
-		return this.requester.request("f1", []);
+		return cast this.requester.request("v1/books/Trash/f1", []);
 	}
 }

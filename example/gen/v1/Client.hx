@@ -4,9 +4,9 @@ package v1;
 
 class Client
 {
-	var archive(default, null) : v1.books.Archive;
+	public var archive(default, null) : v1.books.Archive;
 	
-	var trash(default, null) : v1.books.Trash;
+	public var trash(default, null) : v1.books.Trash;
 	
 	public function new(baseUrl:String):Void {
 		this.archive = new v1.books.Archive(baseUrl);

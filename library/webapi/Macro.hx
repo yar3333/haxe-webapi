@@ -51,6 +51,8 @@ class Macro
 	
 	public static function generateClientAPI() : Void
 	{
+		if (!Context.defined("neko") && !Context.defined("php")) return;
+		
 		if (!Context.defined("display"))
 		{
 			Context.onGenerate(function(types:Array<Type>)
@@ -118,6 +120,7 @@ class Macro
 			({
 				name: child.name,
 				kind: FieldType.FProp("default", "null", ComplexType.TPath(newKlass)),
+				access: [ Access.APublic ],
 				pos: null
 			});
 		}
@@ -133,6 +136,7 @@ class Macro
 			({
 				name: fieldName,
 				kind: FieldType.FProp("default", "null", ComplexType.TPath(newKlass)),
+				access: [ Access.APublic ],
 				pos: null
 			});
 			
@@ -154,21 +158,17 @@ class Macro
 		var serverActions = getMetaMarkedMethods("action", serverClass);
 		var clientActions = serverActions.map(function(method:Method)
 		{
-			var name = method.name;
-			var args = method.args;
 			var ret = method.ret;
-			var pos = method.pos;
 			
 			var callParams = [ 
-				  name.toExpr(pos)
-				, Lambda.map(args, function(a) return Context.parse(a.name, pos)).toArray()
+				serverClass.pack.concat([serverClass.name, method.name]).join("/").toExpr(method.pos),
+				Lambda.map(method.args, function(a) return Context.parse(a.name, method.pos)).toArray()
 			];
-			//var callExpr = ExprDef.EReturn(ExprDef.EBlock([ ExprDef.ECall(macro this.requester.request, callParams).at(pos) ]).at(pos)).at(pos);
-			var callExpr = macro { return this.requester.request($a{callParams}); };
+			var callExpr = macro { return cast this.requester.request($a{callParams}); };
 			var retExpr = MacroTools.isVoid(ret)
 						? macro : js.Promise<{}>
 						: macro : js.Promise<$ret>;
-			return name.makeMethod(args, retExpr, callExpr);
+			return method.name.makeMethod(method.args, retExpr, callExpr);
 		});
 		
 		var constructor = "new".makeMethod([ "baseUrl".toArg(macro : String) ], macro : Void, macro { this.requester = new webapi.Requester(baseUrl); });
@@ -259,4 +259,3 @@ class Macro
 	static function capitalize(s:String) : String return s == "" ? s : s.substr(0, 1).toUpperCase() + s.substr(1);
 	static function decapitalize(s:String) : String return s == "" ? s : s.substr(0, 1).toLowerCase() + s.substr(1);
 }
-

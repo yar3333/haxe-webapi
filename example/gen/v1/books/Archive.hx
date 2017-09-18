@@ -11,10 +11,10 @@ class Archive
 	}
 	
 	public function f1(i:StdTypes.Int):js.Promise<{ }> {
-		return this.requester.request("f1", [i]);
+		return cast this.requester.request("v1/books/Archive/f1", [i]);
 	}
 	
 	public function f2(s:String, n:StdTypes.Float):js.Promise<StdTypes.Int> {
-		return this.requester.request("f2", [s, n]);
+		return cast this.requester.request("v1/books/Archive/f2", [s, n]);
 	}
 }
