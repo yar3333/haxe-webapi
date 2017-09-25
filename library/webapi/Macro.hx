@@ -33,6 +33,7 @@ class Macro
 	public static var output = "gen";
 	public static var aggregatorClassName = "Client";
 	public static var aggregatorTopPackage = "";
+	public static var modulesToCopyToOutput = [];
 	
 	public static function setOutput(s:String) : Void
 	{
@@ -47,6 +48,11 @@ class Macro
 	public static function setAggregatorTopPackage(s:String) : Void
 	{
 		aggregatorTopPackage = s;
+	}
+	
+	public static function copy(module:String) : Void
+	{
+		modulesToCopyToOutput.push(module);
 	}
 	
 	public static function generateClientAPI() : Void
@@ -76,6 +82,11 @@ class Macro
 				}
 				
 				renderClassTree(root, []);
+				
+				for (module in modulesToCopyToOutput)
+				{
+					saveTextFileIfNeed(Path.join([output].concat(module.split("."))) + ".hx", File.getContent(Context.resolvePath(module.replace(".", "/") + ".hx")));
+				}
 			});
 		}
 	}
