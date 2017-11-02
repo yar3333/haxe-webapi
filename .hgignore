@@ -1,3 +1,4 @@
 syntax: glob
 library.zip
 tests/bin/index.n
+example/bin/temp/webapi.log
